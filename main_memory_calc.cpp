@@ -2,28 +2,26 @@
 #include "memory_calc.h"
 
 int main() {
-    std::cout << "=== Тестування конструкторів Calculator ===\n\n";
+    std::cout << "=== Тестування Calculator (Chain + Static) ===\n\n";
 
     Calculator calc1 = 10;
-    std::cout << "calc1 (створено через Calculator calc1 = 10)\n";
-    std::cout << "Початкова пам'ять calc1: " << calc1.getMemory() << "\n";
+    std::cout << "calc1 (через Calculator calc1 = 10)\n";
+    std::cout << "Початкова пам'ять calc1: " << calc1.GetCurrentValue() << "\n";
 
-    calc1.calculate('-', 10);
-    std::cout << "calc1 після calculate('-', 10): " << calc1.getMemory() << "\n\n";
+    int result = calc1.calculate(2, '+')
+                      .calculate(4, '-')
+                      .calculate(5, '*')
+                      .GetCurrentValue();
+    std::cout << "Chain: (10 + 2 - 4) * 5 = " << result << "\n\n";
 
     Calculator calc2;
-    std::cout << "calc2 (створено через конструктор за замовчуванням)\n";
-    std::cout << "Початкова пам'ять calc2: " << calc2.getMemory() << "\n";
+    std::cout << "calc2 (конструктор за замовчуванням)\n";
+    std::cout << "Початкова пам'ять calc2: " << calc2.GetCurrentValue() << "\n";
+    calc2.calculate(25, '+');
+    std::cout << "calc2 після calculate(25, '+'): " << calc2.GetCurrentValue() << "\n\n";
 
-    calc2.calculate('+', 25);
-    std::cout << "calc2 після calculate('+', 25): " << calc2.getMemory() << "\n\n";
-
-    Calculator calc3(50);
-    std::cout << "calc3 (створено через Calculator calc3(50))\n";
-    std::cout << "Початкова пам'ять calc3: " << calc3.getMemory() << "\n";
-
-    calc3.calculate('*', 2);
-    std::cout << "calc3 після calculate('*', 2): " << calc3.getMemory() << "\n";
+    int staticResult = Calculator::calculate(10, 10, '+');
+    std::cout << "Static: Calculator::calculate(10, 10, '+') = " << staticResult << "\n";
 
     return 0;
 }
