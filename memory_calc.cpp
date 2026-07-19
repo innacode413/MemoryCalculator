@@ -12,7 +12,7 @@ void Calculator::setStartValue(int value) {
     memory = value;
 }
 
-int Calculator::calculate(char operation, int value) {
+Calculator& Calculator::calculate(const int& value, const char& operation) {
     if (operation == '+') {
         memory += value;
     } else if (operation == '-') {
@@ -24,9 +24,28 @@ int Calculator::calculate(char operation, int value) {
             memory /= value;
         }
     }
-    return memory;
+    return *this;
+}
+
+int Calculator::calculate(const int& value1, const int& value2, const char& operation) {
+    if (operation == '+') {
+        return value1 + value2;
+    } else if (operation == '-') {
+        return value1 - value2;
+    } else if (operation == '*') {
+        return value1 * value2;
+    } else if (operation == '/') {
+        if (value2 != 0) {
+            return value1 / value2;
+        }
+    }
+    return 0;
 }
 
 int Calculator::getMemory() const {
+    return memory;
+}
+
+int Calculator::GetCurrentValue() const {
     return memory;
 }
